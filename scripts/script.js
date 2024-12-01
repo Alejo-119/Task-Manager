@@ -12,10 +12,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const renderTasks = () => {
         taskList.innerHTML = '';
-        tasks.forEach((task) => {
+        tasks.forEach((task, index) => {
             const li = document.createElement('li');
             li.textContent = task;
-            taskList.appendChild(li); // No se agrega el botón de "Delete"
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.addEventListener('click', () => {
+                tasks.splice(index, 1);
+                saveTasks();
+                renderTasks();
+            });
+            li.appendChild(deleteButton);
+            taskList.appendChild(li);
         });
     };
 

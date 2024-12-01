@@ -24,14 +24,36 @@ document.addEventListener('DOMContentLoaded', () => {
         const tasks = users[currentUser].tasks || [];
         tasks.forEach((task, index) => {
             const li = document.createElement('li');
-            li.textContent = task;
+            
+            // Si la tarea está marcada como completada, agregar la clase 'completed'
+            if (task.completed) {
+                li.classList.add('completed');
+            }
+            
+            li.textContent = task.text;
+            
+            // Botón para marcar como completada o incompleta
+            const completeButton = document.createElement('button');
+            completeButton.textContent = task.completed ? 'Mark Incomplete' : 'Mark Complete';
+            completeButton.style.background = task.completed ? '#dc3545' : '#28a745'; // 
+            completeButton.addEventListener('click', () => {
+                
+                task.completed = !task.completed; // Alternar el estado de completado
+                saveUsers();
+                renderTasks(); // Vuelve a renderizar la lista con el estado actualizado
+            });
+            
+            // Botón para eliminar la tarea
             const deleteButton = document.createElement('button');
             deleteButton.textContent = 'Delete';
+            deleteButton.classList.add('delete-btn'); // Asignar la clase 'delete-btn'
             deleteButton.addEventListener('click', () => {
-                tasks.splice(index, 1);
+                tasks.splice(index, 1); // Eliminar la tarea
                 saveUsers();
-                renderTasks();
+                renderTasks(); // Vuelve a renderizar la lista sin la tarea eliminada
             });
+            
+            li.appendChild(completeButton);
             li.appendChild(deleteButton);
             taskList.appendChild(li);
         });
@@ -58,10 +80,10 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const username = document.getElementById('register-username').value.trim();
         const password = document.getElementById('register-password').value.trim();
-        const confirmPassword = document.getElementById('confirm-password').value.trim();  // Campo de confirmación
+        const confirmPassword = document.getElementById('confirm-password').value.trim();
     
         if (username && password && confirmPassword) {
-            if (password === confirmPassword) {  // Verificar que las contraseñas coincidan
+            if (password === confirmPassword) {
                 if (!users[username]) {
                     users[username] = { password, tasks: [] };
                     saveUsers();
@@ -71,10 +93,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     alert('Username already exists. Please choose another.');
                 }
             } else {
-                alert('The passwords do not match. Please try again.');  // Mensaje de error si las contraseñas no coinciden
+                alert('The passwords do not match. Please try again.');
             }
         } else {
-            alert('Please fill in all fields.');  // Validar que todos los campos estén completos
+            alert('Please fill in all fields.');
         }
     });
 
@@ -98,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const newTask = taskInput.value.trim();
         if (newTask) {
-            users[currentUser].tasks.push(newTask);
+            users[currentUser].tasks.push({ text: newTask, completed: false });
             saveUsers();
             renderTasks();
             taskInput.value = '';

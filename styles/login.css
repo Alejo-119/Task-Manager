@@ -63,15 +63,17 @@ li {
 }
 
 li button {
-    background: #dc3545;
     border: none;
     color: #fff;
     padding: 5px 10px;
     border-radius: 3px;
     cursor: pointer;
 }
+.delete-btn{
+    background: #dc3545;
+}
 
-li button:hover {
+.delete-btn:hover {
     background: #c82333;
 }
 

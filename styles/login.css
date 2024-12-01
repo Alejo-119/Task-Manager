@@ -62,6 +62,19 @@ li {
     align-items: center;
 }
 
+li button {
+    background: #dc3545;
+    border: none;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+li button:hover {
+    background: #c82333;
+}
+
 /* Estilo para el campo de confirmación de contraseña */
 input[type="password"]#confirm-password {
     margin-bottom: 10px;

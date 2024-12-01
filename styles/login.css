@@ -62,3 +62,14 @@ li {
     align-items: center;
 }
 
+/* Estilo para el campo de confirmación de contraseña */
+input[type="password"]#confirm-password {
+    margin-bottom: 10px;
+}
+
+/* Estilo para el mensaje de error si las contraseñas no coinciden */
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}

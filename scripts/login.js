@@ -58,15 +58,23 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const username = document.getElementById('register-username').value.trim();
         const password = document.getElementById('register-password').value.trim();
-        if (username && password) {
-            if (!users[username]) {
-                users[username] = { password, tasks: [] };
-                saveUsers();
-                alert('Registration successful! Please log in.');
-                registerForm.reset();
+        const confirmPassword = document.getElementById('confirm-password').value.trim();  // Campo de confirmación
+    
+        if (username && password && confirmPassword) {
+            if (password === confirmPassword) {  // Verificar que las contraseñas coincidan
+                if (!users[username]) {
+                    users[username] = { password, tasks: [] };
+                    saveUsers();
+                    alert('Registration successful! Please log in.');
+                    registerForm.reset();
+                } else {
+                    alert('Username already exists. Please choose another.');
+                }
             } else {
-                alert('Username already exists. Please choose another.');
+                alert('The passwords do not match. Please try again.');  // Mensaje de error si las contraseñas no coinciden
             }
+        } else {
+            alert('Please fill in all fields.');  // Validar que todos los campos estén completos
         }
     });
 
